@@ -11,23 +11,21 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-12 text-left my-2">
-            <div page-info="@Model.PageInfo" page-action="Index"></div>
+        <div class="col-3">
+            Something here
         </div>
-    </div>
-    <div class="row">
-        @foreach (var book in Model.BooksToDisplay)
-        {
-            <div class="col-4 mb-2 border-bottom">
-                <h3>@book.Title</h3>
-                <p><b>By @book.Author</b></p>
-                <p>@book.Category / @book.Classification</p>
-                <p>$@book.Price</p>
-                <br />
-                <p>ISBN: @book.Isbn</p>
-                <p>Publisher: @book.Publisher</p>
-                <p>Page Count: @book.PageCount</p>
+        <div class="col-9">
+            <div class="row">
+                <div class="col-12 text-left my-2">
+                    <div page-info="@Model.PageInfo" page-action="Index"></div>
+                </div>
             </div>
-        }
-    </div>
+            <div class="row">
+                @foreach (var book in Model.BooksToDisplay)
+                {
+                    <partial name="BookCard" model="book" />
+                }
+            </div>
+        </div>
+    </div> 
 </div>

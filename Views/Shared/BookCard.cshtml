@@ -1,0 +1,15 @@
+﻿@{
+}
+
+@model Book
+
+<div class="col-4 mb-2 border-bottom">
+    <h3>@Model.Title</h3>
+    <p><b>By @Model.Author</b></p>
+    <p>@Model.Category / @Model.Classification</p>
+    <p>$@Model.Price.ToString("c")</p>
+    <br />
+    <p>ISBN: @Model.Isbn</p>
+    <p>Publisher: @Model.Publisher</p>
+    <p>Page Count: @Model.PageCount</p>
+</div>
