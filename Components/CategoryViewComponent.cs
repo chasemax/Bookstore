@@ -18,7 +18,11 @@ namespace Bookstore.Components
 
         public IViewComponentResult Invoke()
         {
-            return View();
+            IQueryable<string> currentBooks = repo.Books
+                .Select(x => x.Category)
+                .Distinct()
+                .OrderBy(x => x);
+            return View(currentBooks);
         }
     }
 }

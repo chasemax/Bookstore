@@ -17,12 +17,14 @@ namespace Bookstore.Controllers
 
         public HomeController(IBookstoreRepo t) => _bkrepo = t;
 
-        public IActionResult Index(int pageNum = 1)
+        public IActionResult Index(int pageNum = 1, string category = null)
         {
             IndexViewModel ivm = new IndexViewModel();
-            int pageSize = 10;
+            int pageSize = 3;
+            ViewBag.category = category;
 
             IQueryable<Book> pageBooks = _bkrepo.Books
+                .Where(x => x.Category == category || category == null)
                 .OrderBy(x => x.Title)
                 .Skip(pageSize * (pageNum - 1))
                 .Take(pageSize);
@@ -30,7 +32,9 @@ namespace Bookstore.Controllers
             ivm.PageInfo = new IndexPageInfo();
 
             ivm.PageInfo.PageSize = pageSize;
-            ivm.PageInfo.BookCount = _bkrepo.Books.Count();
+            ivm.PageInfo.BookCount = _bkrepo.Books
+                .Where(x => x.Category == category || category == null)
+                .Count();
             ivm.PageInfo.CurrentPage = pageNum;
 
             return View(ivm);

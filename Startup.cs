@@ -31,6 +31,9 @@ namespace Bookstore
                 options.UseSqlite(Configuration["ConnectionStrings:BookstoreDBConnection"]);
             });
             services.AddScoped<IBookstoreRepo, EFBookstoreRepo>();
+            services.AddRazorPages();
+            services.AddDistributedMemoryCache();
+            services.AddSession();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,16 +46,32 @@ namespace Bookstore
             
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
-
             app.UseAuthorization();
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
+                    name: "pageAndCategory",
+                    pattern: "Category/{category}/Page{pageNum}",
+                    defaults: new { Controller = "Home", Action = "Index" });
+
+                endpoints.MapControllerRoute(
+                    name: "categoryOnly",
+                    pattern: "Category/{category}",
+                    defaults: new { Controller = "Home", Action = "Index" });
+
+                endpoints.MapControllerRoute(
+                    name: "pageOnly",
+                    pattern: "Page{pageNum}",
+                    defaults: new { Controller = "Home", Action = "Index" });
+
+                endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapRazorPages();
             });
         }
     }
