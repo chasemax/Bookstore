@@ -17,14 +17,14 @@ namespace Bookstore.Pages
         public Cart cart { get; set; }
         public string returnURL { get; set; }
 
-        public CartModel (IBookstoreRepo r)
+        public CartModel (IBookstoreRepo r, Cart c)
         {
             repo = r;
+            cart = c;
         }
 
         public void OnGet(string url)
         {
-            cart = HttpContext.Session.GetJson<Cart>("cart") ?? new Cart();
             returnURL = url ?? "/";
         }
 
@@ -32,11 +32,14 @@ namespace Bookstore.Pages
         {
             Book b = repo.Books.FirstOrDefault(x => x.BookId == BookId);
 
-            cart = HttpContext.Session.GetJson<Cart>("cart") ?? new Cart();
-
             cart.AddToCart(b, 1);
 
-            HttpContext.Session.SetJson("cart", cart);
+            return RedirectToPage(new { url = url });
+        }
+
+        public IActionResult OnPostRemove(int BookId, string url)
+        {
+            cart.RemoveFromCart(cart.BooksToBuy.First(x => x.Book.BookId == BookId).Book);
 
             return RedirectToPage(new { url = url });
         }

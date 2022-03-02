@@ -1,0 +1,34 @@
+﻿@{
+}
+
+@model Checkout
+
+<div>
+    <form method="post">
+        <div asp-validation-summary="All" class="text-danger">
+
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.CustomerFirst">First Name:</label><input asp-for="@Model.CustomerFirst" />
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.CustomerLast">Last Name:</label><input asp-for="@Model.CustomerLast" />
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.DeliveryAddress">Address for Delivery:</label><input asp-for="@Model.DeliveryAddress" />
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.DeliveryCity">City for Delivery:</label><input asp-for="@Model.DeliveryCity" />
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.DeliveryState">State for Delivery:</label><input asp-for="@Model.DeliveryState" />
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.DeliveryZip">Zipcode for Delivery:</label><input asp-for="@Model.DeliveryZip" />
+        </div>
+        <div class="form-group">
+            <input class="custom-checkbox" type="checkbox" asp-for="@Model.IsPOBox" /><label asp-for="@Model.IsPOBox">Check for PO Box Delivery</label>
+        </div>
+        <button type="submit" class="btn btn-success">Purchase</button>
+    </form>
+</div>

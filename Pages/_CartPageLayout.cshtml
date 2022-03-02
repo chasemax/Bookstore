@@ -6,11 +6,13 @@
     <title>@ViewData["Title"] - Bookstore</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link href="~/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
 </head>
 <body>
     <header>
         <div class="navbar navbar-expand-sm navbar-dark bg-dark">
             <a class="nav-link text-light" asp-action="Index" asp-controller="Home">Home</a>
+            <span class="ml-auto"><vc:cart-summary></vc:cart-summary></span>
         </div>
     </header>
     <div class="container">
