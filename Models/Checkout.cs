@@ -30,5 +30,7 @@ namespace Bookstore.Models
         public string DeliveryZip { get; set; }
 
         public bool IsPOBox { get; set; }
+
+        public bool Shipped { get; set; } = false;
     }
 }

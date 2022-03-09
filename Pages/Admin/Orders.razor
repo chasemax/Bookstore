@@ -1,0 +1,50 @@
+﻿@page "/admin/orders"
+@page "/admin"
+@page "/admin/index"
+
+@inherits OwningComponentBase<ICheckoutRepo>
+<div class="row my-3">
+    <div class="col">
+        <h1>Orders</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <div class="accordian" id="order-accordian">
+            <OrderCollapseCard OrderCategory="Shipped" Orders="ShippedOrders" CardName="one" ButtonName="Cancel" StatusChanger="CancelShipment"></OrderCollapseCard>
+            <OrderCollapseCard OrderCategory="Unfulfilled" Orders="UnfulfilledOrders" CardName="two" ButtonName="Ship" StatusChanger="ShipOrder"></OrderCollapseCard>
+        </div>
+    </div>
+</div>
+
+
+@code {
+
+    public ICheckoutRepo repo => Service;
+
+    public IEnumerable<Checkout> AllOrders { get; set; }
+    public IEnumerable<Checkout> ShippedOrders { get; set; }
+    public IEnumerable<Checkout> UnfulfilledOrders { get; set; }
+
+    protected async override Task OnInitializedAsync()
+    {
+        await UpdateData();
+    }
+
+    public void ShipOrder(int id) => UpdateOrder(id, true);
+    public void CancelShipment(int id) => UpdateOrder(id, false);
+
+    public async Task UpdateData()
+    {
+        AllOrders = await repo.Checkouts.ToListAsync();
+        ShippedOrders = AllOrders.Where(x => x.Shipped == true);
+        UnfulfilledOrders = AllOrders.Where(x => x.Shipped == false);
+    }
+
+    public void UpdateOrder(int id, bool ship) 
+    {
+        Checkout checkout = repo.Checkouts.First(x => x.CheckoutId == id);
+        checkout.Shipped = ship;
+        repo.SavePurchase(checkout);
+    }
+}

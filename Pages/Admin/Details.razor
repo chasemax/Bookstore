@@ -1,0 +1,42 @@
+﻿@page "/admin/books/details/{id:long}"
+
+<div class="row my-3">
+    <div class="col">
+        <h1>Details of @currentBook.Title</h1>
+    </div>
+</div>
+
+<table class="table">
+    <tbody>
+        <tr><th>Book ID:</th><td>@currentBook.BookId</td></tr>
+        <tr><th>ISBN:</th><td>@currentBook.Isbn</td></tr>
+        <tr><th>Title:</th><td>@currentBook.Title</td></tr>
+        <tr><th>Author:</th><td>@currentBook.Author</td></tr>
+        <tr><th>Publisher:</th><td>@currentBook.Publisher</td></tr>
+        <tr><th>Category:</th><td>@currentBook.Category</td></tr>
+        <tr><th>Classification:</th><td>@currentBook.Classification</td></tr>
+        <tr><th>Page Count:</th><td>@currentBook.PageCount</td></tr>
+        <tr><th>Price:</th><td>@currentBook.Price.ToString("c")</td></tr>
+    </tbody>
+</table>
+
+<NavLink class="btn btn-warning mb-5" href="@EditUrl">Edit</NavLink>
+<NavLink class="btn btn-secondary mb-5" href="/admin/books">Back</NavLink>
+
+@code {
+
+    [Inject]
+    public IBookstoreRepo repo { get; set; }
+
+    [Parameter]
+    public long Id { get; set; }
+
+    public Book currentBook { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        currentBook = repo.Books.FirstOrDefault(x => x.BookId == Id);
+    }
+
+    public string EditUrl => $"/admin/books/edit/{currentBook.BookId}";
+}

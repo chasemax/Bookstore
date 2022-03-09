@@ -12,5 +12,22 @@ namespace Bookstore.Models
         public EFBookstoreRepo(BookstoreContext t) => _bc = t;
 
         public IQueryable<Book> Books => _bc.Books;
+
+        public void SaveBook(Book b)
+        {
+            _bc.SaveChanges();
+        }
+
+        public void CreateBook(Book b)
+        {
+            _bc.Add(b);
+            _bc.SaveChanges();
+        }
+
+        public void DeleteBook(Book b)
+        {
+            _bc.Remove(b);
+            _bc.SaveChanges();
+        }
     }
 }

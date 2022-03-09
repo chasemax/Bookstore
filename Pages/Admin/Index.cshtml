@@ -1,0 +1,23 @@
+﻿@page "/admin"
+
+@{ Layout = null; }
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bookstore Admin Page</title>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <base href="/" />
+</head>
+<body>
+    <header>
+        <div class="navbar navbar-expand-sm navbar-dark bg-dark">
+            <a class="nav-link text-light" asp-action="Index" asp-controller="Home">Home</a>
+        </div>
+    </header>
+    <component type="typeof(Bookstore.Pages.Admin.Routed)" render-mode="Server" />
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="/_framework/blazor.server.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+</body>
+</html>

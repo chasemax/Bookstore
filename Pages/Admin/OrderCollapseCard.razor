@@ -1,0 +1,72 @@
+﻿<div class="card">
+    <div class="card-header" id="@CardName-header">
+        <h5 class="mb-0">
+            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#@CardName">
+                Orders - @OrderCategory
+            </button>
+        </h5>
+    </div>
+    <div id="@CardName" class="collapse show" data-parent="#order-accordian">
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ISBN</th>
+                        <th>Book</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var o in Orders) 
+                    { 
+                        <tr>
+                            <td colspan="4">
+                                Order #@o.CheckoutId
+                            </td>
+                            <td>
+                                <button class="btn btn-sm btn-primary" @onclick="@(x => StatusChanger.InvokeAsync(o.CheckoutId))">@ButtonName</button>
+                            </td>
+                        </tr>
+                        @foreach (var b in o.BooksToBuy)
+                        { 
+                            <tr>
+                                <td>@b.Book.Isbn</td>
+                                <td>@b.Book.Title</td>
+                                <td>@b.Quantity</td>
+                                <td>@b.Book.Price</td>
+                                <td>@((b.Quantity * b.Book.Price).ToString("c"))</td>
+                            </tr>
+                        }
+                        <tr>
+                                <td colspan="3"></td>
+                                <td>Order Total:</td>
+                                <td>@(o.BooksToBuy.Sum(x => x.Book.Price * x.Quantity).ToString("c"))</td>
+                        </tr>
+
+                    } 
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@code {
+
+    [Parameter]
+    public string OrderCategory { get; set; } = "Shipped";
+
+    [Parameter]
+    public IEnumerable<Checkout> Orders { get; set; }
+
+    [Parameter]
+    public string CardName { get; set; }
+
+    [Parameter]
+    public string ButtonName { get; set; }
+
+    [Parameter]
+    public EventCallback<int> StatusChanger { get; set; }
+
+}
