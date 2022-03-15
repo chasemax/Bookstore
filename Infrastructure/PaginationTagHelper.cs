@@ -28,23 +28,23 @@ namespace Bookstore.Infrastructure
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
             IUrlHelper iuh = uhf.GetUrlHelper(vc);
-            TagBuilder paginationDiv = new TagBuilder("div");
+            TagBuilder paginationDiv = new TagBuilder("ul");
+            paginationDiv.Attributes["class"] = "pagination";
 
             for (int i = 1; i <= PageInfo.TotalPages; i++)
             {
+                TagBuilder listItem = new TagBuilder("li");
+                listItem.Attributes["class"] = "page-item";
                 TagBuilder link = new TagBuilder("a");
                 link.Attributes["href"] = iuh.Action(PageAction, new { pageNum = i });
-                link.InnerHtml.Append("Page " + i.ToString());
+                link.Attributes["class"] = "page-link";
+                link.InnerHtml.Append(i.ToString());
 
-                paginationDiv.InnerHtml.AppendHtml(link);
-
-                if (i != PageInfo.TotalPages)
-                {
-                    paginationDiv.InnerHtml.Append(" | ");
-                }
+                listItem.InnerHtml.AppendHtml(link);
+                paginationDiv.InnerHtml.AppendHtml(listItem);
             }
 
-            output.Content.AppendHtml(paginationDiv.InnerHtml);
+            output.Content.AppendHtml(paginationDiv);
             base.Process(context, output);
         }
 

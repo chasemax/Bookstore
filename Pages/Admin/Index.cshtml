@@ -1,5 +1,10 @@
 ﻿@page "/admin"
 
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+
+@model Bookstore.Pages.Admin.IndexModel
+
 @{ Layout = null; }
 
 <!DOCTYPE html>
@@ -13,6 +18,7 @@
     <header>
         <div class="navbar navbar-expand-sm navbar-dark bg-dark">
             <a class="nav-link text-light" asp-action="Index" asp-controller="Home">Home</a>
+            <a class="nav-link text-light text-right" asp-action="Logout" asp-controller="Account">Logout</a>
         </div>
     </header>
     <component type="typeof(Bookstore.Pages.Admin.Routed)" render-mode="Server" />

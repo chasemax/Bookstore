@@ -3,4 +3,4 @@
 
 @model Cart
 
-<span class="text-light"><i class="fa fa-shopping-cart"></i> @Model.BooksToBuy.Count() Item(s) (@Model.CalculateTotal().ToString("c"))</span>
+<span class="text-light"><i class="fa fa-shopping-cart"></i> <span class="badge bg-secondary">@Model.BooksToBuy.Count() (@Model.CalculateTotal().ToString("c"))</span></span>
